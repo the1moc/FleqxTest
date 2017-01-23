@@ -1,0 +1,49 @@
+﻿@model Fleqx.Models.LoginModel
+
+@{
+	Layout = "~/Views/Shared/_BaseLayout.cshtml";
+	ViewBag.Title = "Login";
+}
+
+<body>
+	<button type="button" class="btn btn-block btn-register btn-hover" data-toggle="modal" data-target="#registerModal">Register</button>
+
+	<img class="center-block login-logo" src="~/Assets/logo.png"></>
+	<div class="panel login-panel panel-default center-block">
+		<div class="panel-heading text-center">Login to Fleqx</div>
+		@using (Html.BeginForm("Login", "Security", FormMethod.Post, new { id = "loginForm", @class = "login-form center-block" }))
+		{
+			<label class="login-label">Username</label>
+			<div class="input-group">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-user"></span>
+				</div>
+				@Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Enter username here..." })
+				
+			</div>
+
+			<label class="login-label">Password</label>
+			<div class="input-group">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-asterisk"></span>
+				</div>
+				@Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Enter password here..." })
+			</div>
+
+			<button type="submit" form="loginForm" class="btn btn-primary btn-lg btn-block center-block submit-login">Submit</button>
+		}
+
+		@if (ViewBag.Error != null)
+		{
+			<script>
+		$(document).ready(function(){
+			alert('@ViewBag.Error');
+		});
+			</script>
+
+		}
+
+	</div>
+</body>
+</html>
+

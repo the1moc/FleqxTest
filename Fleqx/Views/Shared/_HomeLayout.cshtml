@@ -1,0 +1,34 @@
+﻿@{
+	Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+@using System.Text.RegularExpressions
+@using System.Web.Security
+	<div>
+		<div id="sidepanel" class="sidepanel">
+				@if (Context.User.Identity.IsAuthenticated)
+				{
+					string name = Context.User.Identity.Name;
+					name        = Regex.Replace(name, @"\b\w", (Match match) => match.ToString().ToUpper());
+
+				<div class="userinformation">
+					<a class="username" href="Account\Index">@name</a>
+				</div>
+				}
+			<ul>
+				<li><button class="btn btn-success btn-hover"><i class="glyphicon glyphicon-check"></i> Announcements</button></li>
+				<li><button class="btn btn-success btn-hover"><i class="glyphicon glyphicon-globe"></i> Chat</button></li>
+				<li><button class="btn btn-success btn-hover"><i class="glyphicon glyphicon-pushpin"></i> My Tasks</button></li>
+				<li><button class="btn btn-success btn-hover"><i class="glyphicon glyphicon-tasks"></i> Team Tasks</button></li>
+				<li><button class="btn btn-success btn-hover"><i class="glyphicon glyphicon-briefcase"></i> All Tasks</button></li>
+				<li><button class="btn btn-success btn-hover"><i class="glyphicon glyphicon-cog"></i> Account</button></li>
+				@if (User.IsInRole("Admin"))
+				{ 
+					<li><button class="btn btn-success btn-hover" data-toggle="modal" data-target="#registerModal"><i class="glyphicon glyphicon-plus"></i> Add user</button></li>
+				}
+				<li><button class="btn btn-success logout btn-hover" onclick="window.location.href='@Url.Action("Logout", "Security")'"><i class="glyphicon glyphicon-off"></i> Logout</button></li>
+			</ul>
+		</div>
+		@RenderPage("~/Views/Security/SignupPage.cshtml");
+		@RenderBody()
+	</div>
